@@ -95,7 +95,12 @@ vmstat_logger(struct trigger *trigp)
         execlp(trigp->command, trigp->command, trigp->command_args, NULL);
         perror("Execlp failed");
     } else {
-        unlink(pid_file);
+        statp = malloc(sizeof(struct stat *));
+        if (stat(pid_file, statp) != -1) {
+            unlink(pid_file);
+            free(statp);
+        }
+
         fd = open(pid_file, O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR|S_IWGRP);
         pid_str = num_to_str((long)child);
         write(fd, pid_str, strlen(pid_str));
