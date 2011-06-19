@@ -60,7 +60,6 @@ get_cpu_load_cumulative(void)
     }
     
     sys_load /= 5.0;
-    printf("System idle time over 10 seconds is %f\n", sys_load);
     return sys_load;
 }
 
