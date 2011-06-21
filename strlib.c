@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -107,6 +108,65 @@ num_to_str(long num)
     return str;
 }
 
+void
+cleanup(void **ptr)
+{
+    free(*ptr);
+    *ptr = NULL;
+    return;
+}
+
+char *
+lstrip(const char *str)
+{
+    int i;
+    char *ret;
+
+    i = 0;
+
+    if (strlen(str) == 0)
+        return NULL;
+    
+    while (isspace(str[i]))
+           i++;
+    ret = malloc((strlen(str)-i) * sizeof(char));
+    if (ret == NULL)
+        return NULL;
+    strncpy(ret, str+i, strlen(str) - i);
+    return ret;
+}
+
+char *
+rstrip(const char *str)
+{
+    int i;
+    char *ret;
+
+    if (strlen(str) == 0)
+        return NULL;
+
+    i = strlen(str) - 1;
+    while (isspace(str[i]))
+        i++;
+    ret = malloc((i+1) * sizeof(char));
+    if (ret == NULL)
+        return NULL;
+    strncpy(ret, str, i);
+    ret[i+1] = 0;
+    return ret;
+}
+
+char *
+strip(const char *str)
+{
+    char *ret;
+    ret = lstrip(str);
+    if (ret == NULL)
+        return NULL;
+    ret = rstrip(ret);
+    return ret;
+}
+
 /*
 int
 main(void)
@@ -115,8 +175,8 @@ main(void)
     char *str;
 
     f = 1234567;
-    str = num_to_str(f);
-    printf("%s\n", str);
+    str = "		   str		   ";
+    printf("%s\n", strip(str));
 
     return 0;
 }
