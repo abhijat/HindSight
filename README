@@ -1,3 +1,5 @@
 This is a self study project. The idea is to log some performance statistics on
 linux when some performance triggers are activated. In the event of a server 
-crash these log files may prove helpful. 
+crash these log files may prove helpful.
+
+I am moving the project to python from C
