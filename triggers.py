@@ -14,12 +14,11 @@ class trigger:
         self.load = 0.0
 
     def signal_handler(self, signal_number, stack_frame):
-        if signal_number == 1:
-            try:
-                self.file_handle.close()
-            except:
-                pass
-            sys.exit(0)
+        try:
+            self.file_handle.close()
+        except:
+            pass
+        sys.exit(0)
 
     def run_pipe(self):
         proc_lst = []
