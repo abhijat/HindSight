@@ -39,9 +39,9 @@ class trigger:
         child = os.fork()
 
         if child == 0:
+            signal.signal(1, self.signal_handler)
             self.file_handle = open(self.log_loc, 'wb')
             while True:
-                signal.signal(1, self.signal_handler)
                 (out, err) = self.run_pipe()
                 self.file_handle.write('%s\n' % out)
                 time.sleep(self.interval)
